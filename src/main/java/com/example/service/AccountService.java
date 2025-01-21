@@ -1,12 +1,9 @@
 package com.example.service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import javax.naming.AuthenticationException;
 
-import org.h2.security.auth.AuthConfigException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -29,6 +26,14 @@ public class AccountService {
         this.accountRepository = accountRepository; 
     }
 
+    public Optional<Account> findAccountByUsername(String username) {
+        return accountRepository.findByUsername(username);
+    }
+
+    public Account saveAccount(Account account) {
+        return accountRepository.save(account);
+    }
+
     //Registers an account
     public Account register (Account account) 
     {   //checks if username is blank or null
@@ -47,8 +52,7 @@ public class AccountService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists!");
         }
 
-
-        return null;
+        return accountRepository.save(account);
     }
     
 
