@@ -67,4 +67,18 @@ public class MessageService {
     {
         return messageRepository.findByPostedBy(postedBy);
     }
+
+    //updates a message
+    public int updateMessage (Integer messageId, String messageText)
+    {
+        Optional<Message> optionalMessage = messageRepository.findById(messageId);
+        if(optionalMessage.isEmpty())
+        {
+            return 0;
+        }
+        Message message = optionalMessage.get();
+        message.setMessageText(messageText);
+        messageRepository.save(message);
+        return 1; 
+    }
 }
