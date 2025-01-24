@@ -52,14 +52,14 @@ public class MessageService {
     }
 
     //deletes a message by its id
-    public void deleteMessageById(Integer messageId)
+    public int deleteMessageById(Integer messageId)
     {   //checks if message is found or not
         if(!messageRepository.existsById(messageId))
         {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Message with ID: " +messageId + " not found!");
         }
-
         messageRepository.deleteById(messageId);
+        return 1;
     }
 
     //gets message by a specific user

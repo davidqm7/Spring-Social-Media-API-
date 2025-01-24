@@ -94,9 +94,11 @@ public class SocialMediaController {
     //DELETE endpoint to delete a message using it ID
     @DeleteMapping("/messages/{messageId}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteMessage(@PathVariable Integer messageID)
+    public ResponseEntity<Integer> deleteMessage(@PathVariable Integer messageId)
     {
-        messageService.deleteMessageById(messageID);
+        int rows = messageService.deleteMessageById(messageId);
+        return ResponseEntity.ok(rows); 
+       
     }
 
     //GET endpoint to get message from a specific user
