@@ -65,7 +65,9 @@ public class MessageService {
     //gets message by a specific user
     public List<Message> findMessageByPostedBy (Integer postedBy)
     {
+        
         return messageRepository.findByPostedBy(postedBy);
+       
     }
 
     //updates a message

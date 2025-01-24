@@ -8,6 +8,7 @@ import javax.naming.AuthenticationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -80,12 +81,15 @@ public class SocialMediaController {
 
     //GET endpoint to get a message by a specific ID, throw exception if not found
     @GetMapping("/messages/{messageId}")
-    public Message getMessageByID(@PathVariable  Integer messageId)
+    public ResponseEntity<Message> getMessageByID(@PathVariable  Integer messageId)
     {
         Optional<Message> message = messageService.findMessageId(messageId);
-        return message.orElseThrow(() ->
-         new ResponseStatusException(HttpStatus.NOT_FOUND, "Message not found"));
+    if (message.isPresent()) {
+        return ResponseEntity.ok(message.get()); 
+    } else {
+        return ResponseEntity.ok().build(); 
     }
+    } 
     
     //DELETE endpoint to delete a message using it ID
     @DeleteMapping("/messages/{messageId}")
