@@ -102,11 +102,12 @@ public class SocialMediaController {
         return messageService.findMessageByPostedBy(accountId);
     }
 
+    //Patch endpoint to update a message
     @PatchMapping("/messages/{messageId}")
     public int updateMessage (@PathVariable Integer messageId, @RequestBody Map<String, String> body)
     {
         String messageText = body.get("messageText");
-        if(messageText == null || messageText.length() > 255)
+        if(messageText == null || messageText.length() > 255 || messageText.isBlank())
         {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid message");
         }
