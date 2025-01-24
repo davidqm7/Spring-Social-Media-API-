@@ -73,6 +73,10 @@ public class AccountService {
         throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username or password!");
     }
 
-    
+    public boolean accountExistsById(Integer accountId)
+    {
+        return accountRepository.existsById(accountId);
+    }
 
+    
 }

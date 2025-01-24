@@ -15,11 +15,13 @@ import com.example.repository.MessageRepository;
 public class MessageService {
 
     private final MessageRepository messageRepository;
+    private final AccountService accountService;
 
     @Autowired
-    public MessageService(MessageRepository messageRepository)
+    public MessageService(MessageRepository messageRepository, AccountService accountService)
     {
         this.messageRepository = messageRepository;
+        this.accountService = accountService; 
     }
 
     //function to save message
@@ -34,7 +36,10 @@ public class MessageService {
         if(message.getMessageText().length() > 255)
         {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Message cannot be longer than 255 characters");
-    
+        }
+        if(!accountService.accountExistsById(message.getPostedBy()))
+        {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account does not exist");
         }
         return messageRepository.save(message);
     }
@@ -56,7 +61,7 @@ public class MessageService {
     {   //checks if message is found or not
         if(!messageRepository.existsById(messageId))
         {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Message with ID: " +messageId + " not found!");
+            return 0;
         }
         messageRepository.deleteById(messageId);
         return 1;
