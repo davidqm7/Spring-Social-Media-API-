@@ -4,14 +4,12 @@ import javax.persistence.*;
 
 /**
  * This is a class that models an Account.
- *
- * You should NOT make any modifications to this class.
  */
 @Entity
 @Table(name="account")
 public class Account {
     /**
-     * An id for this Account. You should use this as the Entity's ID.
+     * An id for this Account. 
      */
     @Column(name="accountId")
     @Id
